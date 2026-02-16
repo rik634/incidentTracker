@@ -1,8 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import IncidentList from './components/IncidentList';
-import CreateIncident from './components/CreateIncident';
 import IncidentDetail from './components/IncidentDetail';
-
 function App() {
   return (
     <BrowserRouter>
@@ -14,7 +12,6 @@ function App() {
         <main className="container mx-auto px-4">
           <Routes>
             <Route path="/" element={<IncidentList />} />
-            <Route path="/create" element={<CreateIncident onCancel={() => window.history.back()} onSuccess={() => window.location.href='/'} />} />
             <Route path="/incidents/:id" element={<IncidentDetail />} />
           </Routes>
         </main>
