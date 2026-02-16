@@ -89,7 +89,7 @@ const IncidentDetail = () => {
           <div className="flex items-center">
             <label className="w-28 text-[11px] font-bold text-gray-600 uppercase">Assigned To:</label>
             <input 
-              type="text"
+              type="email"
               value={incident.owner || ''}
               className="flex-1 border border-gray-300 rounded px-3 py-1 text-sm outline-none"
               onChange={(e) => setIncident({...incident, owner: e.target.value})}
