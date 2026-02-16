@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+/* Add a nice transition for table rows */
+tr {
+  transition: all 0.2s;
+}
+
+/* Custom Checkbox Styling */
+input[type="checkbox"] {
+  @apply cursor-pointer rounded-sm bg-white;
+}
+
+input[type="checkbox"]:hover {
+  @apply border-gray-400;
+}
+
+input[type="checkbox"]:focus {
+  @apply ring-0 ring-offset-0 outline-none;
+}
