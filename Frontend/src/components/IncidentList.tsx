@@ -107,11 +107,11 @@ const requestSort = (field: string) => {
             <select value={service}
               onChange={(e) => setService(e.target.value)} className="bg-transparent border-none text-sm font-medium focus:ring-0 py-0">
               <option value="">Service</option>
-              <option>Auth-Service</option>
-              <option>Inventory-DB</option>
-              <option>Payment-Gateway</option>
-              <option>UI-Gateway</option>
-              <option>Mail-Server</option>
+              <option>Auth</option>
+              <option>Payments</option>
+              <option>Backend</option>
+              <option>Frontend</option>
+              <option>Database</option>
             </select>
           </div>
           <div className="h-4 w-px bg-gray-200" />

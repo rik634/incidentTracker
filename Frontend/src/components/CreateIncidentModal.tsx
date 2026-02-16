@@ -13,19 +13,34 @@ const CreateIncidentModal = ({ isOpen, onClose, onRefresh }: { isOpen: boolean; 
 
   if (!isOpen) return null;
 
+  const validateEmail = (email: string) => {
+    // If the email is empty or null, it's considered valid
+    if (!email || email.trim() === "") {
+      return true;
+    }
+
+    // Otherwise, check against the regex
+    return String(email)
+      .toLowerCase()
+      .match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+  };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validateEmail(formData.owner)) {
+      alert("Please enter a valid email address or leave it blank.");
+      return;
+    }
     try {
       // 1. Send the POST request to the backend
       await axios.post('/api/incidents', formData);
-      
+
       // 2. Show the success alert
       alert("Incident created successfully!");
-      
+
       // 3. Refresh the main list and close the modal
-      onRefresh(); 
-      onClose();   
-      
+      onRefresh();
+      onClose();
+
       // Reset form state for the next time it opens
       setFormData({
         title: '',
@@ -75,14 +90,14 @@ const CreateIncidentModal = ({ isOpen, onClose, onRefresh }: { isOpen: boolean; 
                 onChange={(e) => setFormData({ ...formData, service: e.target.value })}
               >
                 <option value="">Select...</option>
-                <option>Auth-Service</option>
-                <option>Inventory-DB</option>
-                <option>Payment-Gateway</option>
-                <option>UI-Gateway</option>
-                <option>Mail-Server</option>
+                <option>Auth</option>
+                <option>Payments</option>
+                <option>Backend</option>
+                <option>Frontend</option>
+                <option>Database</option>
               </select>
             </div>
-            
+
           </div>
 
           <div className="space-y-1">
@@ -102,12 +117,13 @@ const CreateIncidentModal = ({ isOpen, onClose, onRefresh }: { isOpen: boolean; 
             </div>
           </div>
 
-        
+
           <div className="flex items-center gap-4">
             <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap min-w-[80px]">
               Assigned To:
             </label>
             <input
+              type="email"
               className="flex-1 border border-gray-300 rounded px-3 py-1.5 outline-none text-sm placeholder:text-gray-300"
               placeholder="Optional"
               value={formData.owner}
