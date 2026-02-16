@@ -13,17 +13,12 @@ const CreateIncidentModal = ({ isOpen, onClose, onRefresh }: { isOpen: boolean; 
 
   if (!isOpen) return null;
 
-  const validateEmail = (email: string) => {
-    // If the email is empty or null, it's considered valid
-    if (!email || email.trim() === "") {
-      return true;
-    }
-
-    // Otherwise, check against the regex
-    return String(email)
-      .toLowerCase()
-      .match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
-  };
+  const validateEmail = (email: string | null | undefined): boolean => {
+    
+    if (!email || email.trim() === "") return true;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email.toLowerCase()); 
+};
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateEmail(formData.owner)) {
@@ -31,17 +26,10 @@ const CreateIncidentModal = ({ isOpen, onClose, onRefresh }: { isOpen: boolean; 
       return;
     }
     try {
-      // 1. Send the POST request to the backend
       await axios.post('/api/incidents', formData);
-
-      // 2. Show the success alert
       alert("Incident created successfully!");
-
-      // 3. Refresh the main list and close the modal
       onRefresh();
       onClose();
-
-      // Reset form state for the next time it opens
       setFormData({
         title: '',
         service: '',
@@ -58,17 +46,11 @@ const CreateIncidentModal = ({ isOpen, onClose, onRefresh }: { isOpen: boolean; 
 
   return (
     <div className="fixed inset-0 bg-gray-900/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      {/* Box size reduced to max-w-md and height optimized */}
       <div className="bg-white w-full max-w-md rounded shadow-xl border border-gray-200 overflow-hidden animate-in zoom-in duration-150">
-
-        {/* Header - Compacted padding */}
         <div className="px-5 py-4 border-b border-gray-100 bg-gray-50/50">
           <h2 className="text-lg font-bold text-gray-800">Create New Incident</h2>
         </div>
-
-        {/* Form - Reduced spacing from space-y-5 to space-y-3.5 */}
         <form onSubmit={handleSubmit} className="p-5 space-y-3.5">
-
           <div className="space-y-1">
             <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Title</label>
             <input
@@ -141,7 +123,6 @@ const CreateIncidentModal = ({ isOpen, onClose, onRefresh }: { isOpen: boolean; 
             />
           </div>
 
-          {/* Action Buttons - Slightly smaller text and padding */}
           <div className="flex gap-3 pt-2">
             <button type="submit" className="flex-1 bg-gray-800 text-white py-2 rounded text-[11px] font-bold uppercase tracking-widest hover:bg-black transition-colors">
               Create

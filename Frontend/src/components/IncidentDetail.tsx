@@ -39,10 +39,8 @@ const IncidentDetail = () => {
 
   return (
     <div className="flex justify-center items-center min-vh-100 py-10">
-      {/* Width set to max-w-md to match Create Incident box */}
       <div className="bg-white w-full max-w-md rounded shadow-2xl border border-gray-200 overflow-hidden animate-in zoom-in duration-150">
         
-        {/* Header - Matching Branding */}
         <div className="px-5 py-4 border-b border-gray-100 bg-gray-50/50">
           <h1 className="text-lg font-bold text-gray-800 tracking-tight">Incident Tracker</h1>
         </div>
@@ -51,7 +49,6 @@ const IncidentDetail = () => {
           <h2 className="text-md font-bold text-gray-700 tracking-tight">{incident.title}</h2>
         </div>
 
-        {/* Compact Form Body */}
         <div className="p-5 space-y-4">
           
           <div className="flex items-center">
@@ -116,8 +113,6 @@ const IncidentDetail = () => {
               onChange={(e) => setIncident({...incident, summary: e.target.value})}
             />
           </div>
-
-          {/* Action Buttons */}
           <div className="flex gap-3 pt-2">
             <button 
               onClick={handleUpdate}

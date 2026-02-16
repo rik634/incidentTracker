@@ -17,15 +17,11 @@ const IncidentList = () => {
   const [loading, setLoading] = useState(false);
   const [sortConfig, setSortConfig] = useState({ field: 'createdAt', direction: 'desc' });
   
-  // This effect monitors all four filter states
-  // 1. Reset to page 0 when any filter changes
   useEffect(() => {
     setPage(0);
   }, [selectedSeverities, status, service, search]);
 
-  // 2. Fetch data whenever the page OR filters change
   useEffect(() => {
-    // Set loading immediately so the user sees a spinner/message
     setLoading(true);
     const delayDebounceFn = setTimeout(() => {
       fetchIncidents();
@@ -34,7 +30,7 @@ const IncidentList = () => {
     return () => clearTimeout(delayDebounceFn);
   }, [page, selectedSeverities, status, service, search,sortConfig]);
 
-  // Function to handle header clicks
+  
 const requestSort = (field: string) => {
     let direction = 'asc';
     if (sortConfig.field === field && sortConfig.direction === 'asc') {
@@ -52,7 +48,7 @@ const requestSort = (field: string) => {
           search: search || null,
           status: status || null,
           service: service || null,
-          // Backend handles "SEV1,SEV2" or null
+          
           severity: selectedSeverities.length > 0 ? selectedSeverities.join(',') : null,
         }
       });
@@ -65,7 +61,7 @@ const requestSort = (field: string) => {
       setLoading(false);
     }
   };
-  // Helper for Severity styling
+  
   const getSevClass = (sev: string) => {
     const map: Record<string, string> = {
       SEV1: 'bg-red-50 text-red-700 border-red-100',
@@ -86,10 +82,10 @@ const requestSort = (field: string) => {
   return (
     <div className="max-w-6xl mx-auto py-10 px-6">
       <div className="bg-white border border-gray-200 rounded-sm shadow-sm">
-        {/* Header Section */}
+        
         <div className="flex justify-between items-center p-6 border-b border-gray-100">
           <div>
-            {/* <span className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Zeotap</span> */}
+            
             <h1 className="text-2xl font-bold tracking-tight mt-1">Incident Tracker</h1>
           </div>
           <button
@@ -100,10 +96,9 @@ const requestSort = (field: string) => {
           </button>
         </div>
 
-        {/* Filters Section */}
         <div className="flex items-center gap-8 p-4 px-6 bg-gray-50/50 border-b border-gray-100 text-sm">
           <div className="flex items-center gap-3">
-            {/* <span className="text-[10px] font-black text-gray-400 uppercase">Service</span> */}
+            
             <select value={service}
               onChange={(e) => setService(e.target.value)} className="bg-transparent border-none text-sm font-medium focus:ring-0 py-0">
               <option value="">Service</option>
@@ -124,7 +119,7 @@ const requestSort = (field: string) => {
                     onChange={() => handleSeverityToggle(sev)}
                     className="peer  w-4 h-4 border border-gray-300 rounded-sm checked:bg-gray-800 checked:border-gray-800 transition-all"
                   />
-                  {/* Custom Checkmark Icon */}
+                 
                   <svg className="absolute w-3 h-3 text-white hidden peer-checked:block pointer-events-none"
                     fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="4">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
@@ -139,15 +134,15 @@ const requestSort = (field: string) => {
         </div>
 
         <div className="flex items-center gap-6 p-4 px-6 bg-gray-50/50 border-b border-gray-100 text-sm">
-          {/* <span className="text-sm font-bold text-gray-500 uppercase tracking-wider w-16">Status</span> */}
+          
           <div className="flex items-center gap-3">
-            {/* <span className="text-[10px] font-black text-gray-400 uppercase">Service</span> */}
+           
             <select value={status}
               onChange={(e) => setStatus(e.target.value)} className="bg-transparent border-none text-sm font-medium focus:ring-0 py-0">
               <option value="">Status</option>
-              <option>OPEN</option>
-              <option>MITIGATED</option>
-              <option>CLOSED</option>
+              <option value="OPEN">OPEN</option>
+              <option value="MITIGATED">MITIGATED</option>
+              <option value="RESOLVED">RESOLVED</option>
             </select>
           </div>
           <div className="relative flex-1 max-w-md">
@@ -167,7 +162,7 @@ const requestSort = (field: string) => {
             Filter
           </button>
         </div>
-        {/* Data Table */}
+        
         <table className="w-full text-left">
           <thead className="bg-gray-50/30">
             <tr className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
@@ -225,7 +220,6 @@ const requestSort = (field: string) => {
           </tbody>
         </table>
 
-        {/* Pagination Footer */}
         <div className="p-4 px-6 border-t border-gray-100 flex justify-between items-center bg-gray-50/20">
           <span className="text-xs text-gray-400 font-medium">
             Page {page + 1} of {totalPages}
@@ -248,7 +242,6 @@ const requestSort = (field: string) => {
           </div>
         </div>
       </div>
-      {/* Change these names to match what you have at the top of your file */}
       <CreateIncidentModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
